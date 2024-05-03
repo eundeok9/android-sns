@@ -33,12 +33,13 @@ android {
         jvmTarget = "17"
     }
 
+    // COMPOSE 설정
     buildFeatures{
         compose = true
     }
 
     composeOptions{
-        kotlinCompilerExtensionVersion = "1.5.2"
+        kotlinCompilerExtensionVersion = "1.4.3"
     }
 
 
