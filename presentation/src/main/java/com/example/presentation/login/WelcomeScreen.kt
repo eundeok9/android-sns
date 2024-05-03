@@ -21,7 +21,9 @@ import com.example.presentation.component.FCButton
 import com.example.presentation.theme.FastcampusSNSTheme
 
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(
+    onNavigateToLoginScreen: ()->Unit
+) {
     Surface {
         Box(Modifier.fillMaxSize(),
             contentAlignment = Alignment.TopCenter
@@ -46,7 +48,7 @@ fun WelcomeScreen() {
                 .align(alignment = Alignment.BottomCenter)
                 .height(48.dp),
                 text = "로그인",
-                onClick = {}
+                onClick = onNavigateToLoginScreen
             )
         }
     }
@@ -56,6 +58,8 @@ fun WelcomeScreen() {
 @Composable
 private fun WelcomeScreenPreview() {
     FastcampusSNSTheme {
-        WelcomeScreen()
+        WelcomeScreen(
+            onNavigateToLoginScreen = {}
+        )
     }
 }
