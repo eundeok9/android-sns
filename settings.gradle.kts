@@ -13,5 +13,8 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "FastcampusSNS"
+rootProject.name = "FastCampusSNS"
 include(":app")
+include(":domain")
+include(":presentation")
+include(":data")
