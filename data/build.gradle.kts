@@ -1,6 +1,9 @@
 plugins {
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.hilt)
+    id("kotlin-kapt")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -30,16 +33,34 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
 
+
     implementation(libs.core.ktx)
-    implementation(libs.androidx.appcompat)
+    implementation(libs.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
     implementation(project(":domain"))
+
+    // serialization
+    implementation(libs.kotlinx.serialization.json)
+
+    // retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.serialization)
+    implementation(libs.okhttp)
+
+    // hilt
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
+
 }
