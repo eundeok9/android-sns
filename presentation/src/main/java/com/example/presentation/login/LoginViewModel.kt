@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -32,20 +33,20 @@ class LoginViewModel @Inject constructor(
         }
     )
 
-    fun onLoginClick() = intent {
+    fun onLoginClick() = blockingIntent {
         val id = state.id
         val passsword = state.password
         val token = loginUseCase(id, passsword).getOrThrow()
         postSideEffect(LoginSideEffect.Toast(message = "token = ${token}"))
     }
 
-    fun onIdChange(id: String) = intent{
+    fun onIdChange(id: String) = blockingIntent{
         reduce {
             state.copy(id = id)
         }
     }
 
-    fun onPasswordChange(password: String) = intent {
+    fun onPasswordChange(password: String) = blockingIntent {
         reduce {
             state.copy(password = password)
         }

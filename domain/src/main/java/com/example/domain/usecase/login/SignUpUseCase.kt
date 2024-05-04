@@ -6,5 +6,5 @@ interface SignUpUseCase {
         id: String,
         username: String,
         password: String
-    ): Result<Unit>
+    ): Result<Boolean> // 회원가입 성공 여부
 }
