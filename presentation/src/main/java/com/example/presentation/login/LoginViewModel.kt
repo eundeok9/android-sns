@@ -3,6 +3,7 @@ package com.example.presentation.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.usecase.login.LoginUseCase
+import com.example.domain.usecase.login.SetTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val setTokenUseCase: SetTokenUseCase,
 ): ViewModel(), ContainerHost<LoginState, LoginSideEffect> {
 
     override val container: Container<LoginState, LoginSideEffect> = container(
@@ -33,12 +35,13 @@ class LoginViewModel @Inject constructor(
         }
     )
 
-    fun onLoginClick() = blockingIntent {
+    fun onLoginClick() = intent {
         val id = state.id
-        val passsword = state.password
-        val token = loginUseCase(id, passsword).getOrThrow()
-//        postSideEffect(LoginSideEffect.Toast(message = "token = ${token}"))
-        postSideEffect(LoginSideEffect.NatigateToMainActivity)
+        val password = state.password
+        val token = loginUseCase(id, password).getOrThrow()
+        setTokenUseCase(token)
+//        postSideEffect(LoginSideEffect.Toast(message = "token = $token"))
+        postSideEffect(LoginSideEffect.NavigateToMainActivity)
     }
 
 
@@ -64,5 +67,5 @@ data class LoginState(
 
 sealed interface LoginSideEffect {
     class Toast(val message: String): LoginSideEffect // 토큰 받아오는지 확인
-    object NatigateToMainActivity: LoginSideEffect
+    object NavigateToMainActivity: LoginSideEffect
 }

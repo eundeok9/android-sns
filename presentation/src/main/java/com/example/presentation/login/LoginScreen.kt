@@ -37,19 +37,19 @@ fun LoginScreen(
 ) {
     val context = LocalContext.current
     val state = viewModel.collectAsState().value
-    viewModel.collectSideEffect {
-        sideEffect -> when(sideEffect) {
+    viewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
             is LoginSideEffect.Toast -> Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
-        LoginSideEffect.NatigateToMainActivity -> {
-            context.startActivity(
-                Intent(
-                    context, MainActivity::class.java
-                ).apply {
-                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-            )
+            LoginSideEffect.NavigateToMainActivity -> {
+                context.startActivity(
+                    Intent(
+                        context, MainActivity::class.java
+                    ).apply {
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                )
+            }
         }
-    }
     }
     LoginScreen(
         id = state.id,
