@@ -37,8 +37,10 @@ class LoginViewModel @Inject constructor(
         val id = state.id
         val passsword = state.password
         val token = loginUseCase(id, passsword).getOrThrow()
-        postSideEffect(LoginSideEffect.Toast(message = "token = ${token}"))
+//        postSideEffect(LoginSideEffect.Toast(message = "token = ${token}"))
+        postSideEffect(LoginSideEffect.NatigateToMainActivity)
     }
+
 
     fun onIdChange(id: String) = blockingIntent{
         reduce {
@@ -62,4 +64,5 @@ data class LoginState(
 
 sealed interface LoginSideEffect {
     class Toast(val message: String): LoginSideEffect // 토큰 받아오는지 확인
+    object NatigateToMainActivity: LoginSideEffect
 }
